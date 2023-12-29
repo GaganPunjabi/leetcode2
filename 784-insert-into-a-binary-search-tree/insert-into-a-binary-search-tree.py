@@ -8,19 +8,19 @@ class Solution:
     def insertIntoBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         if not root:
             return TreeNode(val)
-        def search_in_bst(root: TreeNode, val: int) -> TreeNode:
-            while root:
-                if root.val > val and root.left:
-                    root = root.left
-                elif root.val < val and root.right:
-                    root = root.right
+        ptr = root
+        while ptr:
+            if ptr.val > val:
+                if ptr.left:
+                    ptr = ptr.left
                 else:
-                    return root
-        node = search_in_bst(root, val)
-
-        if val > node.val:
-            node.right = TreeNode(val)
-        else:
-            node.left = TreeNode(val)
+                    ptr.left = TreeNode(val)
+                    break
+            else:
+                if ptr.right:
+                    ptr = ptr.right
+                else:
+                    ptr.right = TreeNode(val)
+                    break
         return root
                 
