@@ -5,22 +5,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def successor(self, root: TreeNode) -> TreeNode:
+    def successor(self, root: TreeNode) -> int:
         root = root.right
         while root.left:
             root = root.left
-        return root
+        return root.val
     
-    def predecessor(self, root: TreeNode) -> TreeNode:
+    def predecessor(self, root: TreeNode) -> int:
         root = root.left
         while root.right:
             root = root.right
-        return root
+        return root.val
 
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root:
             return
-        # Search node
         if key > root.val:
             root.right = self.deleteNode(root.right, key)
         elif key < root.val:
@@ -29,13 +28,11 @@ class Solution:
             if not root.left and not root.right:
                 return None
             elif root.left:
-                node = self.predecessor(root)
-                root.val, node.val = node.val, root.val
-                root.left = self.deleteNode(root.left, key)
+                root.val = self.predecessor(root)
+                root.left = self.deleteNode(root.left, root.val)
             else:
-                node = self.successor(root)
-                root.val, node.val = node.val, root.val
-                root.right = self.deleteNode(root.right, key)
+                root.val = self.successor(root)
+                root.right = self.deleteNode(root.right, root.val)
         return root
 
                 
