@@ -7,26 +7,22 @@
 class BSTIterator:
 
     def __init__(self, root: Optional[TreeNode]):
-        self.root = root
-        self.stack = [(root, False)]
+        self.iter  =self._inorder(root)
+        self.nxt = next(self.iter, None)
+
+    def _inorder(self, node: Optional[TreeNode]) -> Generator[int, None, None]:
+        if node:
+            yield from self._inorder(node.left)
+            yield node.val
+            yield from self._inorder(node.right)
 
     def next(self) -> int:
-        while self.stack:
-            node, visited = self.stack.pop()
-            if visited:
-                return node.val
-            else:
-                if node.right:
-                    self.stack.append((node.right, False))
-                self.stack.append((node, True))
-                if node.left:
-                    self.stack.append((node.left, False))
-        return -1
+        res, self.nxt = self.nxt, next(self.iter, None)
+        return res
 
     def hasNext(self) -> bool:
-        if self.stack:
-            return True
-        return False
+        return self.nxt is not None
+
 
 # Your BSTIterator object will be instantiated and called as such:
 # obj = BSTIterator(root)
