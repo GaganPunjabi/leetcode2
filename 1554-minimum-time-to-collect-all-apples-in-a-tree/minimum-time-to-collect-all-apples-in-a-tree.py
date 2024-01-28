@@ -6,8 +6,6 @@ class Solution:
         return len(self.tm[vertex]) == 1
 
     def minTime(self, n: int, edges: List[List[int]], hasApple: List[bool]) -> int:
-        if n == 1:
-            return 0
         # Create adjency matrix
         self.adj = [[] for i in range(n)]
         for parent, child in edges:
