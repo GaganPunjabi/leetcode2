@@ -25,7 +25,7 @@ class WordDictionary:
             elif not suffix:
                 return False
             elif suffix[0] == "." and root.children:
-                for letter, child in root.children.items():
+                for child in root.children.values():
                     if dfs(child, suffix[1:]):
                         return True
             elif suffix[0] in root.children.keys():
