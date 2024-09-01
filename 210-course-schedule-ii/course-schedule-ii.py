@@ -9,8 +9,6 @@ class Solution:
         def dfs(cur):
             if cur in visited:
                 return False
-            if cur in visited:
-                return True
             for pre in adj_lst[cur]:
                 visited.add(cur)
                 if not dfs(pre):
