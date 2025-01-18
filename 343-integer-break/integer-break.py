@@ -1,13 +1,10 @@
 class Solution:
     def integerBreak(self, n: int) -> int:
-        dp = {1:1}
-        def dfs(num):
-            if num in dp:
-                return dp[num]
-            else:
-                dp[num] = num if num != n else 0
-                for i in range(1, num):
-                    res = dfs(i) * dfs(num - i)
-                    dp[num] = max(res, dp[num])
-            return dp[num]
-        return dfs(n)
+        dp = [i for i in range(n)]
+        
+        dp.append(0) # We need to split last num.
+        
+        for i in range(2, n+1):
+            for j in range(1, i):
+                dp[i] = max(dp[i], dp[j] * dp[i-j])
+        return dp[n]
