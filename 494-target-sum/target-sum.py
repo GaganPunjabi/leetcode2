@@ -1,16 +1,14 @@
+from collections import defaultdict
+
+
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
-        prev_dp = [0] * (2*sum(nums) + 1)
-        prev_dp[sum(nums)] = 1
-        if -sum(nums) > target or sum(nums) < target:
-            return 0
+        prev_dp = defaultdict(int)
+        prev_dp[0] = 1
         for i in range(len(nums)):
-            cur_dp = [0] * (2*sum(nums) + 1)
-            for j in range(len(cur_dp)):
-                if j - nums[i] >= 0:
-                    cur_dp[j] += prev_dp[j - nums[i]]
-                if j + nums[i] < (2*sum(nums) + 1):
-                    cur_dp[j] += prev_dp[j + nums[i]]
+            cur_dp = defaultdict(int)
+            for j, count in prev_dp.items():
+                cur_dp[j - nums[i]] += count
+                cur_dp[j + nums[i]] += count
             prev_dp = cur_dp
-            print(prev_dp)
-        return prev_dp[sum(nums) + target]
+        return prev_dp[target] if target in prev_dp else 0
