@@ -11,4 +11,4 @@ class Solution:
                 cur_dp[j - nums[i]] += count
                 cur_dp[j + nums[i]] += count
             prev_dp = cur_dp
-        return prev_dp[target] if target in prev_dp else 0
+        return prev_dp[target]
